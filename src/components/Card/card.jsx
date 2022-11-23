@@ -12,7 +12,7 @@ const Card = ({ item, setAmount, amount, idItem }) => {
     setActiveButton(!activeButton)
     // setAmount()
     if (item.id === idItem) {
-      localStorage.setItem(`${item.title}`, JSON.stringify(item))
+      localStorage.setItem('Пиццы', JSON.stringify(item))
       // localStorage.clear()
       setAmount()
       setItemCound(item.amount + 1)

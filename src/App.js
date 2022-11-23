@@ -1,18 +1,18 @@
-import './App.scss';
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-import Header from './components/Header/header';
-import Menu from './components/Menu/menu';
-import Main from './components/Main/main';
+import './App.scss';
+import Home from './components/Home/home';
+import Basket from './components/Basket/basket'
+
 
 function App() {
+
   return (
-    <div className="app">
-      <div className="app__container">
-        <Header />
-        <Menu />
-        <Main />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/basket" element={<Basket />} />
+    </Routes>
   );
 }
 

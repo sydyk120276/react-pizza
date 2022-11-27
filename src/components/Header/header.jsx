@@ -4,6 +4,19 @@ import { Link } from 'react-router-dom';
 import logo from '../../image/logo.png'
 
 const Header = ({ count }) => {
+
+const basketItems = JSON.parse(localStorage.getItem('hello'))
+console.log("basketItemsssssssssss", basketItems);
+
+let sum = 0
+
+if (basketItems !== null) {
+  sum = basketItems.reduce((acc, rec) => {
+    return acc + rec.price;
+  }, 0);
+}
+
+
   return (
     <section className="header">
       <div className="header__container">
@@ -18,7 +31,7 @@ const Header = ({ count }) => {
             </div>
           </div>
           <div className="header__items-basket basket">
-            <span className="basket__sum">21212 ₽</span>
+            <span className="basket__sum">{sum}</span>
             <div className="basket__line"></div>
             <Link to="/basket" className="basket__icon">
               <svg

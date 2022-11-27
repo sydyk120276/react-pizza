@@ -2,20 +2,37 @@ import React from 'react'
 
 import Card from '../Card/card';
 
-const Main = ({ items, setCount, count }) => {
+const Main = ({
+  items,
+  setCount,
+  count,
+  activeButton,
+  onClickAmountButton,
+}) => {
+
   return (
     <section className="main">
       <div className="main__container">
         <span className="main__title">Все пиццы</span>
         <div className="main__body">
           {items.map((item) => {
-            const idItem = items.find((el) => el.id === item.id)
-            return <Card key={item.id} item={item} idItem={idItem.id} setAmount={setCount} amount={count} />;
+                const basketItem = items.find((el) => el.id === item.id);
+            return (
+              <Card
+                key={item.id}
+                item={item}
+                basketItem={basketItem}
+                setAmount={setCount}
+                amount={count}
+                activeButton={activeButton}
+                onClickAmountButton={onClickAmountButton}
+              />
+            );
           })}
         </div>
       </div>
     </section>
   );
-}
+};
 
 export default Main

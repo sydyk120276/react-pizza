@@ -137,17 +137,39 @@ const items = [
 
 const Home = () => {
   const [count, setCount] = useState(0)
+  const [activeButton, setActiveButton] = useState(false);
+  const [itemCounttt, setItemCoundttt] = useState(items);
 
-  const setCountItem = () => {
-    setCount(count + 1)
-  }
+    const onClickAmountButton = (id) => {
+      setActiveButton(true);
+      setCount(count + 1);
+      const amoutBasket = items
+        .map((elem) => {
+          if (elem.id === id) {
+            elem.amount++;
+          }
+          return elem;
+        })
+        .filter((item) => item.amount > 0);
+      setItemCoundttt(amoutBasket);
+      localStorage.setItem("hello", JSON.stringify(amoutBasket));
+
+    };
+
+    console.log("itemCounttt", itemCounttt);
+    console.log("count", count);
 
   return (
     <div className="home">
       <div className="home__container">
         <Header count={count} />
         <Menu />
-        <Main items={items} setCount={setCountItem} count={count} />
+        <Main
+          items={items}
+          count={count}
+          activeButton={activeButton}
+          onClickAmountButton={onClickAmountButton}
+        />
       </div>
     </div>
   );

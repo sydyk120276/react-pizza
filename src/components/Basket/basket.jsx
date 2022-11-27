@@ -6,7 +6,7 @@ import logo from '../../image/logo.png'
 
 const Basket = () => {
 
-  const basketItems = [JSON.parse(localStorage.getItem('Пиццы'))]
+  const basketItems = JSON.parse(localStorage.getItem("hello"));
   console.log(basketItems)
 
   return (

@@ -6,7 +6,7 @@ import logo from '../../image/logo.png'
 const Header = ({ count }) => {
 
 const basketItems = JSON.parse(localStorage.getItem('hello'))
-console.log("basketItemsssssssssss", basketItems);
+console.log("basketItems", basketItems);
 
 let sum = 0
 
@@ -30,10 +30,10 @@ if (basketItems !== null) {
               </span>
             </div>
           </div>
-          <div className="header__items-basket basket">
-            <span className="basket__sum">{sum}</span>
+          <Link to="/basket" className="header__items-basket basket">
+            <span className="basket__sum">{sum} ₽</span>
             <div className="basket__line"></div>
-            <Link to="/basket" className="basket__icon">
+            <div className="basket__icon">
               <svg
                 width="18"
                 height="18"
@@ -64,8 +64,8 @@ if (basketItems !== null) {
                 />
               </svg>
               <div className="basket__icon-count">{count}</div>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -3,20 +3,27 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../image/logo.png'
 
-const Header = ({ count }) => {
+const Header = () => {
+  const basketItems = JSON.parse(localStorage.getItem("hello"));
+  console.log('qqqqqqqqqqqqqqqqqqq',basketItems)
 
-const basketItems = JSON.parse(localStorage.getItem('hello'))
-console.log("basketItems", basketItems);
+  let sumPrice = 0;
 
-let sum = 0
+  if (basketItems !== null) {
+    sumPrice = basketItems.reduce((acc, rec) => {
+      return acc + rec.price * rec.amount;
+    }, 0);
+  }
 
-if (basketItems !== null) {
-  sum = basketItems.reduce((acc, rec) => {
-    return acc + rec.price;
-  }, 0);
-}
+  let sumAmount = 0;
 
+  if (basketItems !== null) {
+    sumAmount = basketItems.reduce((acc, rec) => {
+      return acc + rec.amount;
+    }, 0);
+  }
 
+  console.log(sumAmount);
   return (
     <section className="header">
       <div className="header__container">
@@ -31,7 +38,7 @@ if (basketItems !== null) {
             </div>
           </div>
           <Link to="/basket" className="header__items-basket basket">
-            <span className="basket__sum">{sum} ₽</span>
+            <span className="basket__sum">{sumPrice} ₽</span>
             <div className="basket__line"></div>
             <div className="basket__icon">
               <svg
@@ -63,7 +70,7 @@ if (basketItems !== null) {
                   strokeLinejoin="round"
                 />
               </svg>
-              <div className="basket__icon-count">{count}</div>
+              <div className="basket__icon-count">{sumAmount}</div>
             </div>
           </Link>
         </div>

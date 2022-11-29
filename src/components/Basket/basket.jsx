@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import BasketItem from './basket-item'
@@ -9,23 +9,56 @@ const Basket = () => {
   const itemOnBasket = JSON.parse(localStorage.getItem("hello"));
   console.log("itemOnBasket", itemOnBasket);
 
-  let amountBasket = 0
+  const [items, setItems] = useState(
+    itemOnBasket
+  );
 
-  if (itemOnBasket !== null) {
-    amountBasket = itemOnBasket.reduce((acc, rec) => {
+    const amountBasket = items.reduce((acc, rec) => {
       return acc + rec.amount;
     }, 0);
-  }
-  let basketSum = 0
 
-  if (itemOnBasket !== null) {
-    basketSum = itemOnBasket.reduce((acc, rec) => {
-      return acc + rec.price;
+
+   const basketSum = items.reduce((acc, rec) => {
+      return acc + rec.price * rec.amount;
     }, 0);
-  }
 
 const deleteItemsOnBasket = () => {
   localStorage.clear();
+}
+
+const handlerRemoveItem = (id) => {
+   setItems(items.filter((el) => el.id !== id))
+       const arrayItemsBasket = items.map((elem) => {
+         if (elem.id === id) {
+           elem.amount = 0;
+         }
+         return elem;
+       });
+       localStorage.setItem("hello", JSON.stringify(arrayItemsBasket));
+}
+const handlerIncrementItem = (id) => {
+   setItems(items.map((el) => {
+     if (el.id === id) {
+        el.amount++
+     }
+     return el
+   }))
+   localStorage.setItem("hello", JSON.stringify(items));
+}
+const handlerDectementItem = (id, count) => {
+  if (count < 2) {
+    handlerRemoveItem(id);
+  } else {
+   setItems(
+     items.map((el) => {
+       if (el.id === id) {
+         el.amount--;
+       }
+       return el;
+     })
+   );
+  }
+     localStorage.setItem("hello", JSON.stringify(items));
 }
 
   return (
@@ -77,7 +110,8 @@ const deleteItemsOnBasket = () => {
                 </svg>
                 <span>Корзина</span>
               </div>
-              <Link to="/"
+              <Link
+                to="/"
                 onClick={deleteItemsOnBasket}
                 className="basket-body__header-icon-right"
               >
@@ -122,9 +156,20 @@ const deleteItemsOnBasket = () => {
             </div>
             <div className="basket-body__line"></div>
             <div className="basket-body__items">
-              {itemOnBasket && itemOnBasket.map((elem) => {
-                return <BasketItem key={elem.id} elem={elem} />;
-              })}
+              {items &&
+                items
+                  .filter((item) => item.amount > 0)
+                  .map((elem) => {
+                    return (
+                      <BasketItem
+                        key={elem.id}
+                        elem={elem}
+                        handlerRemoveItem={handlerRemoveItem}
+                        handlerIncrementItem={handlerIncrementItem}
+                        handlerDectementItem={handlerDectementItem}
+                      />
+                    );
+                  })}
             </div>
             <div className="basket-body__total">
               <span className="basket-body__total-amount">
@@ -139,6 +184,29 @@ const deleteItemsOnBasket = () => {
                   {basketSum} ₽
                 </span>
               </span>
+            </div>
+            <div className="basket-body__link">
+              <Link to="/" className="basket-body__link-to-home">
+                <svg
+                  width="8"
+                  height="14"
+                  viewBox="0 0 8 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 13L1 6.93015L6.86175 1"
+                    stroke="#D3D3D3"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span>Вернуться назад</span>
+              </Link>
+              <Link to="/" className="basket-body__link-pay">
+                Оплатить сейчас
+              </Link>
             </div>
           </div>
         </div>

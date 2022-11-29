@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 
-const Card = ({ item, activeButton, onClickAmountButton }) => {
+const Card = ({ item, onClickAmountButton }) => {
 
   const onClick = (id) => {
     onClickAmountButton(id);
@@ -38,7 +38,7 @@ const Card = ({ item, activeButton, onClickAmountButton }) => {
         <div className="card__selection-price">от {item.price} ₽</div>
         <button
           className={
-            activeButton && item.amount > 0 ? "selection-button-active" : "card__selection-button"
+            item.amount > 0 ? "selection-button-active" : "card__selection-button"
           }
           type="submit"
           onClick={() => onClick(item.id)}
